@@ -28,7 +28,11 @@ tot_sco = [0,0]
 
 for game_cnt in range(game_num) :
     result = play_game(game_cnt)
-    if result > 0 : tot_sco[1] += 1
-    elif result < 0 : tot_sco[0] += 1
+    if result > 0 : 
+        tot_sco[1] += 1
+        print("Player 2 won!")
+    elif result < 0 : 
+        tot_sco[0] += 1
+        print("Player 1 won!")
 
 print("RESULT : {} vs {}".format(tot_sco[0],tot_sco[1]))
