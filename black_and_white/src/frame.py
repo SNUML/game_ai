@@ -1,0 +1,44 @@
+class PlayerVisibleState :
+    def __init__(self,rem,oppw,oppb,oppl,res,name) :
+        self.rem = rem # my remaining tiles in list
+        self.white = oppw # opponent white tile remaining (includes self.opp)
+        self.black = oppb # opponent black tile remaining (includes self.opp)
+        self.opp = oppl # what opponent drew : black - 0, white - 1, you're first turn - -1
+        self.res = res # result of last round : win - 1, lose - -1, draw - 0
+        self.stage = 10 - len(rem) # current round
+        self.name = name # Player1 or Player2
+
+class State :
+    def __init__(self) :
+        self.rem = [list(range(9)), list(range(9))]
+        self.score = [0,0]
+        self.turn = 0
+        self.last = 0
+    
+    def draw(self, c1, c2) :
+        if not c1 in self.rem[0] :
+            raise Exception("Player 1 drew invalid tile : {} not in list".format(c1))
+        if not c2 in self.rem[1] :
+            raise Exception("Player 2 drew invalid tile : {} not in list".format(c2))
+        self.rem[0].remove(c1)
+        self.rem[1].remove(c2)
+        if c1 > c2 :
+            self.turn = 0
+            self.last = -1
+            self.score[0] += 1
+        elif c1 < c2 :
+            self.turn = 1
+            self.last = 1
+            self.score[1] += 1
+        else :
+            self.last = 0
+    
+    def player_states(self) :
+        w2 = sum(map(lambda x : x%2==1, self.rem[1]))
+        b2 = len(self.rem[1])-w2
+        ps1 = PlayerVisibleState(self.rem[0],w2,b2,-1,-self.last,"Player1")
+        w1 = sum(map(lambda x : x%2==1, self.rem[0]))
+        b1 = len(self.rem[0])-w1
+        ps2 = PlayerVisibleState(self.rem[1],w1,b1,-1,self.last,"Player2")
+        return (ps1,ps2)
+

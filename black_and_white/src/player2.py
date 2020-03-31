@@ -1,6 +1,7 @@
+import random as rd
+
 def init() :
-    # Initialize
     pass
 
 def query(state) :
-    return 1
+    return state.rem[rd.randrange(0,len(state.rem))]
