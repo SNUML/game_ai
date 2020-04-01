@@ -1,7 +1,8 @@
 import random as rd
 
-def init() :
-    pass
+class Player:
+    def __init__(self) :
+        pass
 
-def query(state) :
-    return state.rem[rd.randrange(0,len(state.rem))]
+    def query(self, state) :
+        return state.rem[rd.randrange(0,len(state.rem))]

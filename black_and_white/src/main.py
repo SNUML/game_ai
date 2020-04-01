@@ -1,11 +1,11 @@
 import sys, os
 from frame import State
-import player1 as p1
-import player2 as p2
+from player1 import Player as player1
+from player2 import Player as player2
 
 def play_game(game_cnt) :
-    p1.init()
-    p2.init()
+    p1 = player1()
+    p2 = player2()
     s = State()
     print("{}th Game!".format(game_cnt+1))
     for _ in range(9) :
