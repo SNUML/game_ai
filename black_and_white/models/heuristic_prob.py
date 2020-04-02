@@ -56,12 +56,12 @@ class Player:
     def heuristic_query(self, opp, rem):
         value_table = [0]*10
         sum = 0
-        if opp > 0:
-            for i in range(opp,10,2):
+        if opp >= 0:
+            for i in range(1-opp,10,2):
                 self.prob_table[i] = 0
 
         for i in range(0,10):
-            value_table[i] = (2*sum+self.prob_table[i])/pow(i+1,1)
+            value_table[i] = (2*sum+self.prob_table[i])/(i+1)
             sum += self.prob_table[i]
 
         print("value table: ",value_table)
@@ -78,8 +78,8 @@ class Player:
     def heuristic_query2(self, opp, rem):
         value_table = [0]*10
         sum = 0
-        if opp > 0:
-            for i in range(opp,10,2):
+        if opp >= 0:
+            for i in range(1-opp,10,2):
                 self.prob_table[i] = 0
 
         maxi = -1e9
