@@ -1,9 +1,9 @@
 import random as rd
 class Player:
     def __init__(self):
-        self.prob_table = [1]*10
+        self.prob_table = [1]*9
         self.possible_black = [[0, 2, 4, 6, 8]]  # every possible combinations
-        self.possible_white = [[1, 3, 5, 7, 9]]
+        self.possible_white = [[1, 3, 5, 7]]
         self.last_pick = -1
         pass
 
@@ -16,8 +16,8 @@ class Player:
         #print("black: ",self.possible_black)
         self.update_prob_table(self.possible_black, 0)
         self.update_prob_table(self.possible_white, 1)
-        self.last_pick = self.heuristic_query2(state.opp, state.rem)
-        print(self.last_pick)
+        self.last_pick = self.heuristic_query(state.opp, state.rem)
+        #print(self.last_pick)
         return self.last_pick
 
     def update_possible_list(self, pos_list, last_pick, res, color):
@@ -42,25 +42,25 @@ class Player:
         return new_list
 
     def update_prob_table(self, pos_list, color):
-        for i in range(color,10,2):
+        for i in range(color,9,2):
             self.prob_table[i]=0
         for comb in pos_list:
             for num in comb:
                 self.prob_table[num]+=1
         if len(pos_list) > 0:
-            for i in range(color,10,2):
+            for i in range(color,9,2):
                 self.prob_table[i]/=len(pos_list)
         #print("prob_table: ",self.prob_table)
         
 
     def heuristic_query(self, opp, rem):
-        value_table = [0]*10
+        value_table = [0]*9
         sum = 0
-        if opp >= 0:
-            for i in range(1-opp,10,2):
+        if opp >= 0: 
+            for i in range(1-opp,9,2):
                 self.prob_table[i] = 0
 
-        for i in range(0,10):
+        for i in range(0,9):
             value_table[i] = (2*sum+self.prob_table[i])/(i+1)
             sum += self.prob_table[i]
 
@@ -76,15 +76,15 @@ class Player:
         return rand_list[rd.randrange(0,len(rand_list))]
 
     def heuristic_query2(self, opp, rem):
-        value_table = [0]*10
+        value_table = [0]*9
         sum = 0
         if opp >= 0:
-            for i in range(1-opp,10,2):
+            for i in range(1-opp,9,2):
                 self.prob_table[i] = 0
 
         maxi = -1e9
         for n in rem:
-            for i in range(0,10):
+            for i in range(0,9):
                 if n > i:
                     value_table[n] += (self.prob_table[i])*(5-n+i)
                 elif n < i:

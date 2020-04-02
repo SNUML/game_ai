@@ -6,13 +6,13 @@ class PlayerVisibleState :
         self.opp = oppl # what opponent drew : black - 0, white - 1, you're first turn - -1
         self.last_opp = lopp # what oppenent drew in a last turn : black - 0, white - 1 
         self.res = res # result of last round : win - 1, lose - -1, draw - 0
-        self.stage = 11 - len(rem) # current round
+        self.stage = 10 - len(rem) # current round
         self.score = score
         self.name = name # Player1 or Player2
 
 class State :
     def __init__(self) :
-        self.rem = [list(range(10)), list(range(10))]
+        self.rem = [list(range(9)), list(range(9))]
         self.score = [0,0]
         self.turn = 0
         self.last = 0

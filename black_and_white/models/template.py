@@ -4,7 +4,7 @@ class Player:
 
     # output current state and use user input
     def query(self, state) :
-        for _ in range(10) : print()
+        for _ in range(9) : print()
         print("#" * 80)
         print(" {} ".format(state.name).center(80,'#'))
         print(" {}th stage ".format(state.stage).center(80,'#'))
