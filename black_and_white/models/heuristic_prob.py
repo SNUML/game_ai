@@ -1,11 +1,14 @@
 import random as rd
+import math
 class Player:
     def __init__(self):
+        pass
+
+    def init(self):
         self.prob_table = [1]*9
         self.possible_black = [[0, 2, 4, 6, 8]]  # every possible combinations
         self.possible_white = [[1, 3, 5, 7]]
         self.last_pick = -1
-        pass
 
     def query(self, state):
         if state.last_opp == 0:
@@ -52,6 +55,19 @@ class Player:
                 self.prob_table[i]/=len(pos_list)
         #print("prob_table: ",self.prob_table)
         
+    def choose_good(self, value_table, rem):
+        sum = 0 
+        for n in rem :
+            sum += math.exp(0.1*value_table[n])
+        r = rd.random()
+        s = 0
+        if sum == 0 :
+            return rem[0]
+        for n in rem :
+            s += math.exp(0.1*value_table[n])/sum
+            if r < s :
+                return n
+        return rem[-1]
 
     def heuristic_query(self, opp, rem):
         value_table = [0]*9
@@ -64,7 +80,8 @@ class Player:
             value_table[i] = (2*sum+self.prob_table[i])/(i+1)
             sum += self.prob_table[i]
 
-        print("value table: ",value_table)
+        #print("value table: ",value_table)
+        
         maxi = -1e9
         for n in rem:
             if value_table[n] >= maxi:
@@ -74,6 +91,8 @@ class Player:
             if value_table[n] == maxi:
                 rand_list.append(n)
         return rand_list[rd.randrange(0,len(rand_list))]
+        
+        return self.choose_good(value_table,rem)
 
     def heuristic_query2(self, opp, rem):
         value_table = [0]*9
@@ -86,11 +105,13 @@ class Player:
         for n in rem:
             for i in range(0,9):
                 if n > i:
-                    value_table[n] += (self.prob_table[i])*(5-n+i)
+                    value_table[n] += (self.prob_table[i])*(4.5-n+i)
                 elif n < i:
-                    value_table[n] += (self.prob_table[i])*(-5+i-n)
+                    value_table[n] += (self.prob_table[i])*(-4.5+i-n)
             if value_table[n] >= maxi:
                 maxi = value_table[n]
+
+        return self.choose_good(value_table,rem)
 
         #print(value_table)
         rand_list = []

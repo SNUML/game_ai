@@ -1,5 +1,8 @@
 class Player:
-    def __init__(self) :
+    def __init__(self):
+        pass
+
+    def init(self) :
         pass
 
     # output current state and use user input

@@ -3,9 +3,11 @@ from frame import State
 from player1 import Player as player1
 from player2 import Player as player2
 
-def play_game(game_cnt) :
-    p1 = player1()
-    p2 = player2()
+def play_game(game_cnt,p1,p2) :
+    #p1 = player1()
+    #p2 = player2()
+    p1.init()
+    p2.init()
     s = State()
     print("{}th Game!".format(game_cnt+1))
     for _ in range(9) :
@@ -26,8 +28,10 @@ def play_game(game_cnt) :
 game_num = int(sys.argv[1])
 tot_sco = [0,0]
 
+p1 = player1()
+p2 = player2()
 for game_cnt in range(game_num) :
-    result = play_game(game_cnt)
+    result = play_game(game_cnt,p1,p2)
     if result > 0 : 
         tot_sco[1] += 1
         print("Player 2 won!")

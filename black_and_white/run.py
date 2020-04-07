@@ -7,7 +7,7 @@ def main(argv) :
     parser = argparse.ArgumentParser(description="Black and White Simulator")
     parser.add_argument('-f',dest='files',nargs='*',
         help="path of codes to run (at most 2)")
-    parser.add_argument('-c',dest='count',nargs=1,type=int,default=100,
+    parser.add_argument('-c',dest='count',nargs=1,type=int,default=[100],
         help="number of plays")
     parsed = parser.parse_args(argv[1:])
 
